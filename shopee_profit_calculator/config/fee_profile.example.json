@@ -1,0 +1,15 @@
+{
+  "_readme": "Shopeeの手数料は国(ID/TH/VN/PH/MY/SG/TW/BRなど)・出品者プログラム(通常/Shopee Mall/Preferred等)・カテゴリーによって異なり、Shopee側の改定も頻繁です。ここに実在しない数値を仮置きすると誤った利益判断につながるため、全ての率は0を初期値にしています。必ずご自身のShopeeセラーセンター内『収益・手数料』ページで最新の実数を確認し、このファイルをコピーして値を埋めてから使ってください (config/fee_profile.json など任意の名前で保存し、--fee-profile で指定します)。",
+
+  "marketplace": "SET_ME (例: TW, TH, VN, PH, MY, SG, ID, BR)",
+  "currency": "SET_ME (例: TWD, THB, VND, PHP, MYR, SGD, IDR, BRL)",
+
+  "commission_rate_default": 0.0,
+  "commission_rate_by_category": {
+    "_example_category_name": 0.0
+  },
+
+  "transaction_fee_rate": 0.0,
+  "service_fee_rate": 0.0,
+  "fixed_fee_per_order": 0.0
+}

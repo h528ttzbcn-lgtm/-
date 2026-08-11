@@ -1,0 +1,15 @@
+{
+  "_readme": "これはツールの動作確認用のダミー数値です。実在のShopee手数料ではありません。本番利用前に必ず config/fee_profile.example.json をコピーし、ご自身のセラーセンターで確認した実数値に置き換えてください。",
+
+  "marketplace": "TEST",
+  "currency": "TEST",
+
+  "commission_rate_default": 0.05,
+  "commission_rate_by_category": {
+    "electronics": 0.06
+  },
+
+  "transaction_fee_rate": 0.02,
+  "service_fee_rate": 0.0,
+  "fixed_fee_per_order": 0.0
+}
