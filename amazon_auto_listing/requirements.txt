@@ -1,0 +1,5 @@
+python-amazon-sp-api>=1.9.16
+pandas>=2.0
+python-dotenv>=1.0
+click>=8.1
+tenacity>=8.2

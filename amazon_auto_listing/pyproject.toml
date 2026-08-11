@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "amazon-auto-listing"
+version = "0.1.0"
+description = "Amazon SP-API based bulk listing tool for listing against existing ASINs"
+requires-python = ">=3.10"
+dependencies = [
+    "python-amazon-sp-api>=1.9.16",
+    "pandas>=2.0",
+    "python-dotenv>=1.0",
+    "click>=8.1",
+    "tenacity>=8.2",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.4"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"amazon_auto_listing" = ["templates/*.json"]

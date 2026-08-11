@@ -1,0 +1,24 @@
+{
+  "_comment": "Best-effort generic attribute set for relisting against an EXISTING ASIN (相乗り出品). Amazon validates attributes per product_type via the Product Type Definitions API, so some categories will require additional fields (e.g. item_name, bullet_point, recommended_browse_nodes) even when the ASIN already exists. Run `python -m amazon_auto_listing.cli inspect-schema --product-type <TYPE>` once you have real credentials to see the exact required schema for your category, then extend/duplicate this file as templates/<PRODUCT_TYPE>.json.",
+  "merchant_suggested_asin": [
+    { "value": "$asin", "marketplace_id": "$marketplace_id" }
+  ],
+  "condition_type": [
+    { "value": "$condition_type", "marketplace_id": "$marketplace_id" }
+  ],
+  "purchasable_offer": [
+    {
+      "marketplace_id": "$marketplace_id",
+      "currency": "$currency",
+      "our_price": [
+        { "schedule": [{ "value_with_tax": $price }] }
+      ]
+    }
+  ],
+  "fulfillment_availability": [
+    {
+      "fulfillment_channel_code": "$fulfillment_channel",
+      "quantity": $quantity
+    }
+  ]
+}
