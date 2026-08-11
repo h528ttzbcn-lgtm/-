@@ -22,6 +22,10 @@ class FeeProfile:
     transaction_fee_rate: float = 0.0
     service_fee_rate: float = 0.0
     fixed_fee_per_order: float = 0.0
+    # Default target profit margin (0〜1の小数, 例 0.2 = 20%) used for the
+    # recommended-price / 値上げ・値下げ判定 when a product row doesn't set
+    # its own target_margin_rate. 0 (default) disables the recommendation.
+    default_target_margin_rate: float = 0.0
 
     def commission_rate_for(self, category: str) -> float:
         if category and category in self.commission_rate_by_category:

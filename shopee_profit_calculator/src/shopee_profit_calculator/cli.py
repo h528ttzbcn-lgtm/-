@@ -11,7 +11,7 @@ import logging
 
 import click
 
-from .calculator import calculate_all
+from .calculator import DEFAULT_PRICE_TOLERANCE_PCT, calculate_all
 from .csv_loader import SheetValidationError, load_product_sheet
 from .fee_profile import load_fee_profile
 from .reporter import write_report
@@ -35,8 +35,15 @@ def cli():
     help="Shopee手数料設定JSON (config/fee_profile.example.json をコピーして値を入力したもの)",
 )
 @click.option("--output-dir", default="output", help="結果CSVの出力先ディレクトリ")
-def calc(csv_path, fee_profile_path, output_dir):
-    """商品ごとの利益・利益率・損益分岐価格を一括計算する。"""
+@click.option(
+    "--price-tolerance-pct",
+    default=DEFAULT_PRICE_TOLERANCE_PCT,
+    help=f"推奨価格が現在価格の何%以内なら「維持」とみなすか (既定 {DEFAULT_PRICE_TOLERANCE_PCT * 100:.0f}%)",
+)
+def calc(csv_path, fee_profile_path, output_dir, price_tolerance_pct):
+    """商品ごとの利益・利益率・損益分岐価格に加え、目標利益率を満たす推奨価格と
+    値上げ/値下げ判定を一括計算する。
+    """
     fee_profile = load_fee_profile(fee_profile_path)
 
     for w in fee_profile.warnings():
@@ -49,10 +56,20 @@ def calc(csv_path, fee_profile_path, output_dir):
 
     click.echo(f"{len(products)} 件の商品を読み込みました。")
 
-    results = calculate_all(products, fee_profile)
+    results = calculate_all(products, fee_profile, price_tolerance_pct=price_tolerance_pct)
 
     profitable = sum(1 for r in results if r.is_profitable)
     click.echo(f"黒字見込み: {profitable} / {len(results)} 件")
+
+    reprice = [r for r in results if r.price_action in ("値上げ推奨", "値下げ推奨")]
+    if reprice:
+        click.echo(f"価格見直し推奨: {len(reprice)} 件")
+        for r in reprice:
+            click.echo(
+                f"  [{r.price_action}] {r.product_name}: "
+                f"現在価格={r.selling_price:.2f} 推奨価格={r.recommended_price:.2f} "
+                f"差={r.price_diff:+.2f}"
+            )
 
     for r in sorted(results, key=lambda r: r.margin_rate if r.margin_rate is not None else float("-inf"))[:5]:
         margin_pct = f"{r.margin_rate * 100:.1f}%" if r.margin_rate is not None else "N/A"

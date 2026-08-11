@@ -13,6 +13,8 @@ OPTIONAL_COLUMNS = {
     "category": "",
     "shipping_cost": 0.0,
     "other_fixed_cost": 0.0,
+    "export_tax_refund": 0.0,
+    "target_margin_rate": "",  # blank = use FeeProfile.default_target_margin_rate
 }
 
 
@@ -47,6 +49,12 @@ def load_product_sheet(path: str | Path) -> list[Product]:
 
     for i, row in df.iterrows():
         try:
+            target_margin_raw = row["target_margin_rate"]
+            target_margin_rate = (
+                None
+                if target_margin_raw is None or pd.isna(target_margin_raw) or str(target_margin_raw).strip() == ""
+                else float(target_margin_raw)
+            )
             product = Product(
                 product_name=str(row["product_name"]).strip(),
                 cost_price=float(row["cost_price"]),
@@ -55,6 +63,8 @@ def load_product_sheet(path: str | Path) -> list[Product]:
                 category=str(row["category"]).strip(),
                 shipping_cost=float(row["shipping_cost"]),
                 other_fixed_cost=float(row["other_fixed_cost"]),
+                export_tax_refund=float(row["export_tax_refund"]),
+                target_margin_rate=target_margin_rate,
             )
         except (ValueError, TypeError) as exc:
             row_errors.append(f"row {i + 2}: 型変換に失敗しました ({exc})")

@@ -1,4 +1,4 @@
-product_name,cost_price,selling_price,quantity,category,shipping_cost,other_fixed_cost
-モバイルバッテリー10000mAh,450,1280,20,electronics,60,0
-ワイヤレスイヤホン,780,2480,15,electronics,60,0
-ステンレスタンブラー500ml,320,980,30,home,50,0
+product_name,cost_price,selling_price,quantity,category,shipping_cost,other_fixed_cost,export_tax_refund,target_margin_rate
+モバイルバッテリー10000mAh,450,1280,20,electronics,60,0,0,0.3
+ワイヤレスイヤホン,780,2480,15,electronics,60,0,40,
+ステンレスタンブラー500ml,320,980,30,home,50,0,0,0.15
