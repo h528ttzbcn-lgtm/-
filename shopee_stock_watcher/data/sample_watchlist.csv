@@ -1,0 +1,3 @@
+shopee_item_id,product_name,current_status,shopee_sku,source_asin,source_price
+1234567890,モバイルバッテリー10000mAh,in_stock,MY-SKU-0001,B0EXAMPLE1,1980
+1234567891,ワイヤレスイヤホン,out_of_stock,MY-SKU-0002,B0EXAMPLE2,3480
