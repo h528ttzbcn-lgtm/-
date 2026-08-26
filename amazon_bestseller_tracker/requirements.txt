@@ -1,0 +1,8 @@
+python-amazon-sp-api>=1.9.16
+pandas>=2.0
+python-dotenv>=1.0
+click>=8.1
+tenacity>=8.2
+# Optional: only needed if you set KEEPA_API_KEY for Keepa-style price/rank
+# history stats (`pip install keepa`).
+# keepa>=1.3
