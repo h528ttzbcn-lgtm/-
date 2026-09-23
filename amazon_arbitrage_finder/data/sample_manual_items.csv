@@ -1,0 +1,3 @@
+jan,price,title,shop_name,url,shipping_cost,points
+4901234567894,12800,サンプル商品A(量販店公式サイトで見つけた商品),家電量販店公式サイト,https://example.com/item/a,0,1280
+4912345678904,5980,サンプル商品B,家電量販店公式サイト,https://example.com/item/b,,60
