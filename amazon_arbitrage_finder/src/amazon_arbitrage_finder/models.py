@@ -54,6 +54,9 @@ class SourceItem:
         before `point_value_rate` is applied).
     jan: 13-digit JAN/EAN if known. Items without it can't be matched to
         Amazon reliably and are skipped.
+    condition: "new" or "used" as reported by the source ("new" when the
+        source doesn't say — Rakuten has no such field, so used items there
+        are caught by title keywords instead).
     """
 
     source: str
@@ -67,6 +70,7 @@ class SourceItem:
     points: float = 0.0
     jan: str | None = None
     in_stock: bool = True
+    condition: str = "new"
 
 
 @dataclass

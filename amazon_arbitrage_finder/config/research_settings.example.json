@@ -21,7 +21,7 @@
   "max_sales_rank": 50000,
   "max_offer_count": 0,
   "exclude_brands": [],
-  "exclude_title_keywords": ["中古", "訳あり", "アウトレット", "展示品", "再生品"],
+  "exclude_title_keywords": ["中古", "訳あり", "わけあり", "アウトレット", "展示品", "再生品", "整備品", "リファービッシュ", "リファブ", "開封品", "開封済", "未使用品", "箱潰れ", "箱つぶれ", "箱不良", "外箱傷", "ジャンク", "B級品"],
   "check_restrictions": true,
 
   "sku_prefix": "ARB-",

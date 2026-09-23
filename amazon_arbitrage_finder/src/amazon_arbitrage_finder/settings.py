@@ -8,6 +8,13 @@ from dataclasses import dataclass, field, fields
 from pathlib import Path
 
 
+# 新品として出品できない商品(中古・展示品・開封品・箱不良など)を示す語
+DEFAULT_EXCLUDE_TITLE_KEYWORDS = [
+    "中古", "訳あり", "わけあり", "アウトレット", "展示品", "再生品", "整備品", "リファービッシュ", "リファブ",
+    "開封品", "開封済", "未使用品", "箱潰れ", "箱つぶれ", "箱不良", "外箱傷", "ジャンク", "B級品",
+]
+
+
 @dataclass
 class ResearchSettings:
     # --- Amazon販売価格の決め方 ---
@@ -34,7 +41,8 @@ class ResearchSettings:
     max_sales_rank: int = 0
     max_offer_count: int = 0
     exclude_brands: list = field(default_factory=list)
-    exclude_title_keywords: list = field(default_factory=lambda: ["中古", "訳あり", "アウトレット", "展示品"])
+    # 新品として出品できない商品を仕入れ先の商品名で除外する(楽天には商品状態の項目が無いため)
+    exclude_title_keywords: list = field(default_factory=lambda: list(DEFAULT_EXCLUDE_TITLE_KEYWORDS))
     check_restrictions: bool = True
 
     # --- 出品CSV(amazon_auto_listing 用)の初期値 ---
@@ -56,6 +64,8 @@ class ResearchSettings:
         for source, rate in self.extra_point_rate.items():
             if float(rate) > 0.5:
                 msgs.append(f"extra_point_rate[{source}]={rate} は50%超です。小数で入力しているか確認してください")
+        if self.condition_type != "new_new":
+            msgs.append(f"condition_type='{self.condition_type}' です。新品として出品する場合は new_new にしてください")
         if self.inbound_shipping_per_unit == 0 and self.is_fba:
             msgs.append("FBA前提ですが inbound_shipping_per_unit(納品送料)が0です。利益が過大になる可能性があります")
         return msgs

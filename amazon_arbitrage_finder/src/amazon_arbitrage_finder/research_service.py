@@ -35,6 +35,9 @@ def prefilter(items: list[SourceItem], settings: ResearchSettings) -> tuple[list
         if not item.in_stock:
             rejected.append(cand.reject("在庫なし"))
             continue
+        if item.condition != "new":
+            rejected.append(cand.reject("中古", f"仕入れ先の商品状態が '{item.condition}'"))
+            continue
         if not item.jan:
             rejected.append(cand.reject("JANなし", "JANコードが取得できずAmazonと照合できません"))
             continue

@@ -150,3 +150,20 @@ def test_reports_and_listing_sheet(tmp_path):
     assert lines[1].startswith("OK,")  # OK rows first
     assert listing.read_text().splitlines()[0] == "sku,asin,price,quantity,condition_type,product_type,currency,fulfillment_channel"
     assert write_listing_sheet([], settings, tmp_path, "empty") is None
+
+
+def test_prefilter_keeps_only_new_items():
+    items = [
+        make_item(condition="used", item_code="u"),
+        make_item(title="【中古】イヤホン", item_code="t"),
+        make_item(title="イヤホン 開封品 保証なし", item_code="o"),
+        make_item(title="イヤホン 新品", item_code="n"),
+    ]
+    kept, rejected = prefilter(items, ResearchSettings())
+    assert [c.item.item_code for c in kept] == ["n"]
+    assert sorted(c.status for c in rejected) == sorted(["中古", "除外キーワード", "除外キーワード"])
+
+
+def test_settings_warn_when_not_listing_as_new():
+    assert any("new_new" in m for m in ResearchSettings(condition_type="used_like_new").warnings())
+    assert not any("new_new" in m for m in ResearchSettings().warnings())

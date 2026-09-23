@@ -43,6 +43,7 @@ def parse_item(raw: dict) -> SourceItem:
         points=float(point.get("amount") or 0),
         jan=normalize_jan(raw.get("janCode")),
         in_stock=bool(raw.get("inStock", True)),
+        condition=raw.get("condition") or "new",
     )
 
 
@@ -59,6 +60,7 @@ class YahooClient:
             "results": RESULTS_PER_PAGE,
             "start": (page - 1) * RESULTS_PER_PAGE + 1,
             "in_stock": "true",
+            "condition": "new",  # 新品のみ
         }
         if query.shop:
             params["seller_id"] = query.shop

@@ -84,6 +84,7 @@ def test_yahoo_parse_and_search(monkeypatch):
         "point": {"amount": 198},
         "seller": {"sellerId": "yamada-denki", "name": "ヤマダデンキ Yahoo!店"},
         "shipping": {"code": 2},
+        "condition": "new",
     }
     session = MagicMock()
     session.get.return_value = _response(200, {"totalResultsAvailable": 1, "hits": [hit]})
@@ -97,3 +98,5 @@ def test_yahoo_parse_and_search(monkeypatch):
     params = session.get.call_args.kwargs["params"]
     assert params["seller_id"] == "yamada-denki"
     assert params["appid"] == "cid"
+    assert params["condition"] == "new"
+    assert item.condition == "new"
